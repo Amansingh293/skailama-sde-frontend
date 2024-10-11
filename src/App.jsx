@@ -47,7 +47,7 @@ function App() {
               </Suspense>
             }
           />
-          <Route path="/" element={<Loader />} />
+
         </Routes>
       </BrowserRouter>
     </>
