@@ -44,12 +44,32 @@ const Home = () => {
       console.log(error.message);
     }
   };
+  const retrieveAllProjects = async () => {
+    try {
+      const response = await axios.get(BASE_URL + "/project/all-projects", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("skailamaAppToken")}`,
+        },
+      });
 
+      if (response.data.success) {
+        if (response.data.data.length !== 0) {
+          navigate("/all-projects");
+        } else {
+          navigate("/");
+        }
+      }
+
+      console.log(response);
+    } catch (error) {}
+  };
   useEffect(() => {
     if (!localStorage.getItem("skailamaAppToken")) {
       message.error("please login!");
       navigate("/login");
     }
+
+    retrieveAllProjects();
   }, []);
 
   return (
