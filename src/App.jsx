@@ -32,7 +32,7 @@ function App() {
             }
           />
           <Route
-            path="/home"
+            path="/"
             element={
               <Suspense fallback={<Loader />}>
                 <HomePage />
@@ -47,7 +47,6 @@ function App() {
               </Suspense>
             }
           />
-
         </Routes>
       </BrowserRouter>
     </>

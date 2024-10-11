@@ -27,7 +27,7 @@ const Allprojects = () => {
         if (response.data.data.length !== 0) {
           setAllProjectsData(response.data.data);
         } else {
-          navigate("/home");
+          navigate("/");
         }
       }
 
