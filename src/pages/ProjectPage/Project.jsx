@@ -16,6 +16,7 @@ import { BASE_URL } from "../../constants";
 import { message } from "antd";
 import { FaArrowLeft } from "react-icons/fa6";
 import Settings from "../../components/SettingsComponent/Settings";
+import Input from "../../components/Input";
 
 const Project = () => {
   const { id } = useParams();
@@ -30,7 +31,7 @@ const Project = () => {
 
   const [currentTab, setCurrentTab] = useState("addyourpodcast");
 
-  const [projectData, setProjectData] = useState({});
+  const [projectData, setProjectData] = useState();
 
   const [transcriptObject, setTranscriptObject] = useState();
 
@@ -105,12 +106,23 @@ const Project = () => {
           },
         }
       );
-      setProjectData(response.data.data);
-      setTranscriptArray(response.data.data);
-      console.log(response);
+      if (response.data.success) {
+        setProjectData(response.data.data);
+        setTranscriptArray(response.data.data);
+        message.success(response.data.message);
+      } else {
+        message.error(response.data.message);
+      }
+      setFileDetails({
+        episodeName: "",
+        transcript: "",
+        status: "",
+      });
     } catch (error) {
+      message.error(error.response.data.message);
       console.log(error.message);
     }
+
     setLoader(false);
   };
 
@@ -164,6 +176,7 @@ const Project = () => {
 
       if (response.data.success) {
         setTranscriptObject((prev) => response.data.data);
+        message.success(response.data.message);
         getEpisodes();
       } else {
         message.error("Error updating");
@@ -264,7 +277,7 @@ const Project = () => {
               style={
                 currentTab === "settings"
                   ? {
-                      color: "white !important",
+                      color: "white",
                       backgroundColor: "#7E22CE",
                     }
                   : {
@@ -279,8 +292,6 @@ const Project = () => {
 
             <hr style={{ fontSize: "2rem", width: "100%" }} />
           </div>
-
-          {loader && <Loader />}
 
           <div className="right-portion-project">
             {tabs && tabs[1] && (
@@ -392,7 +403,7 @@ const Project = () => {
                 ></div>
 
                 <div className="table-container">
-                  {projectData.length === 0 ? (
+                  {transcriptArray.length === 0 ? (
                     <div style={{ padding: "2rem", fontSize: "30px" }}>
                       Please Upload Podcast !
                     </div>
@@ -508,6 +519,7 @@ const Project = () => {
                     >
                       {" "}
                       <FaArrowLeft
+                        style={{ cursor: "pointer" }}
                         onClick={() => setViewEditTranscript(false)}
                       />{" "}
                       Edit Transcript
@@ -601,7 +613,7 @@ const Project = () => {
                   />
                 </div>
                 <div>episodeName</div>
-                <input
+                <Input
                   type="text"
                   style={{
                     width: "100%",
@@ -609,6 +621,8 @@ const Project = () => {
                     borderRadius: "10px",
                     // boxShadow: "1px 1px 1px 1px rgb(207, 207, 207)",
                     border: "1px solid",
+                    padding: "10px",
+                    fontSize: "15px",
                   }}
                   onChange={(e) => {
                     setFileDetails({
@@ -628,6 +642,9 @@ const Project = () => {
                     resize: "none",
                     height: "5rem",
                     border: "1px solid",
+                    padding: "10px",
+                    fontSize: "15px",
+                    overflow: "auto",
                   }}
                   onChange={(e) => {
                     setFileDetails({
@@ -639,7 +656,7 @@ const Project = () => {
                 <div>Status</div>
                 <div>
                   <label style={{ marginRight: "10px" }}>
-                    <input
+                    <Input
                       type="radio"
                       name="status"
                       value="done"
@@ -653,7 +670,7 @@ const Project = () => {
                     Done
                   </label>
                   <label>
-                    <input
+                    <Input
                       type="radio"
                       name="status"
                       value="inprogress"

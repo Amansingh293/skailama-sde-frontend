@@ -7,6 +7,7 @@ import Loader from "../../components/LoaderComponent/Loader";
 import NavBar from "../../components/NavBar";
 import ProjectCard from "../../components/ProjectcardComponent/ProjectCard";
 import Button from "../../components/Button";
+import Input from "../../components/Input";
 
 const Allprojects = () => {
   const [allProjectsData, setAllProjectsData] = useState([]);
@@ -122,7 +123,7 @@ const Allprojects = () => {
                     }}
                   >
                     <h4>Enter Project Name:</h4>
-                    <textarea
+                    <Input
                       required
                       value={projectName}
                       style={{

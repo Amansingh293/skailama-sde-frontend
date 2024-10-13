@@ -5,10 +5,11 @@
   width: fit-content;
   box-shadow: 2px 2px 2px 2px rgb(212, 212, 212);
   border-radius: 10px;
-  padding: 15px;
+  padding: 10px;
   gap: 10px;
   margin-top: 1rem;
   cursor: pointer;
+  
 }
 
 .project-card-image {
@@ -35,4 +36,10 @@
 .inner-div > p {
   font-size: 18px;
   font-weight: 600;
+}
+
+@media screen and (max-width: 1100px) {
+  .project-card-image {
+    width: 12rem;
+  }
 }
