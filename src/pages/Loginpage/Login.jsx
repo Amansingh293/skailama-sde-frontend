@@ -45,7 +45,7 @@ const Login = () => {
   });
   const handleSignup = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     try {
       const response = await axios.post(BASE_URL + "/user/signup", formData);
 
@@ -55,7 +55,10 @@ const Login = () => {
       } else {
         message.error(response.data.message);
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error.respone.data.message);
+    }
+    setLoading(false);
   };
   return (
     <>
